@@ -21,7 +21,12 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-img-container">
-                        <img src="{% static 'css/images/football-player-soccer-player-svgrepo-com.svg' %}" alt="Team Logo" class="card-img"/>
+                        {% if team.image %}
+                            <img src="{% static team.image %}" alt="{{ team.name }} logo" class="card-img"/>
+                        {% else %}
+                            {# fallback image if no team.image provided #}
+                            <img src="{% static 'css/images/football-player-soccer-player-svgrepo-com.svg' %}" alt="Team Logo" class="card-img"/>
+                        {% endif %}
                     </div>
                     <h2 class="card-title">{{ team.name }}</h2>
                      {% if team.name == team.name %}

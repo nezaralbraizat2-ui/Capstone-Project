@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="logo-container">
+    <h1 class="page-header">Welcome to Football Tracker</h1>
+    <div class="team-container">
+        <img src="{% static 'css/images/football-svgrepo-com.svg' %}" alt="Team 1 Logo" class="team-logo">
+    </div>
+</section>
+{% endblock %}

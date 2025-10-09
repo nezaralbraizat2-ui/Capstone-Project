@@ -1,0 +1,84 @@
+/* Homepage layout and card styling */
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  padding: 24px;
+  background: linear-gradient(180deg, #f6fbff 0%, #e9f3ff 50%, #ffffff 100%);
+}
+
+main > section {
+  width: 100%;
+  max-width: 760px;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 18px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 8px 24px rgba(18,36,63,0.08);
+  border: 1px solid rgba(20,70,140,0.06);
+}
+
+.logo-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  flex-direction: column;
+  padding: 6px 12px;
+}
+
+.team-container {
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(104,197,248,0.12), rgba(36,116,248,0.06));
+  border-radius: 50%;
+  border: 2px solid rgba(36,116,248,0.14);
+  padding: 12px;
+}
+
+.team-container .team-logo,
+.main-logo {
+  width: 100%;
+  max-width: 120px;
+  height: auto;
+  display: block;
+}
+
+.main-logo {
+  max-width: 200px;
+}
+
+.page-header {
+  margin: 0;
+  font-size: clamp(2.4rem, 3.4vw, 3.6rem);
+  color: var(--text-color);
+  text-transform: capitalize;
+  letter-spacing: 0.6px;
+  text-align: center;
+}
+
+/* Hide header logo on small screens (it's duplicated in the card) */
+.header-logo-container { display: none; }
+
+@media only screen and (min-width: 768px) {
+  .header-logo-container { display: flex; }
+  main > section { max-width: 980px; }
+  .team-container { width: 160px; height: 160px; }
+  .team-container .team-logo { max-width: 140px; }
+  .main-logo { max-width: 280px; }
+}
+
+@media only screen and (min-width: 1024px) {
+  main { padding: 40px; }
+  main > section { padding: 48px; }
+}
