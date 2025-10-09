@@ -9,8 +9,31 @@
       <h1>All Teams</h1>
       <img src="{% static 'css/images/football-player-spain-svgrepo-com.svg' %}" alt="Football Icon" class="header-icon"/>
 
-      <img src="{% static 'css/images/football-svgrepo-com(1).svg' %}" alt="Football Icon" class="header-icon"/>
+    <img src="{% static 'css/images/football-svgrepo-com (1).svg' %}" alt="Football Icon" class="header-icon"/>
 
-      <img src="{% static 'css/images/football-svgrepo-com.svg' %}" alt="Football Icon" class="header-icon"/>
+    <img src="{% static 'css/images/football-svgrepo-com.svg' %}" alt="Football Icon" class="header-icon"/>
 
-      <img src="{% static 'css/images/football-svgrepo-com(2).svg' %}" alt="Football Icon" class="header-icon"/>
+    <img src="{% static 'css/images/football-svgrepo-com (2).svg' %}" alt="Football Icon" class="header-icon"/>
+    </section>
+
+    <section class="card-container">
+        {% for team in teams %}
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-img-container">
+                        <img src="{% static 'css/images/football-player-soccer-player-svgrepo-com.svg' %}" alt="Team Logo" class="card-img"/>
+                    </div>
+                    <h2 class="card-title">{{ team.name }}</h2>
+                     {% if team.name == team.name %}
+                         <p><strong>Country:</strong> {{ team.country }}</p>
+                         <p><strong>Coach:</strong> {{ team.coach_name }}</p>
+                         <p><strong>Stadium:</strong> {{ team.stadium }}</p>
+
+                         {% else %}
+                             <p>Team information is not available.</p>
+                         {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+{% endblock %}
