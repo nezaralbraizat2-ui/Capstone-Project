@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Team
 
 
 # Create your views here.
@@ -10,14 +11,14 @@ def about(request):
     return render(request, 'about.html')
 
 
-class Team:
-    def __init__(self, name, country, coach_name, stadium=None, image=None):
-        self.name = name
-        self.country = country
-        self.coach_name = coach_name
-        self.stadium = stadium
-        # optional image path (relative to static/) to show on templates
-        self.image = image
+# class Team:
+#     def __init__(self, name, country, coach_name, stadium=None, image=None):
+#         self.name = name
+#         self.country = country
+#         self.coach_name = coach_name
+#         self.stadium = stadium
+#         # optional image path (relative to static/) to show on templates
+#         self.image = image
 
 
 # Create the teams list after the Team class is defined so we can instantiate Team
@@ -30,4 +31,9 @@ Team.teams = [
 
 
 def team_index(request):
-    return render(request, 'teams/index.html', { 'teams': Team.teams })
+    teams = Team.objects.all()
+    return render(request, 'teams/index.html', {'teams': teams})
+
+def team_detail(request, team_id):
+    team = Team.objects.get(id=team_id)
+    return render(request, 'teams/detail.html', { 'team': team })

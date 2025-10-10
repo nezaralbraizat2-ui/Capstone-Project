@@ -6,7 +6,7 @@ class Team(models.Model):
     country = models.CharField(max_length=100)
     coach_name = models.CharField(max_length=100)
     stadium = models.CharField(max_length=100, null=True, blank=True)
-    image = models.CharField(max_length=255, null=True, blank=True)  # optional image path (relative to static/)
+    image = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.name
