@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+
+from .forms import MatchForm
 from .models import Team
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -36,7 +38,8 @@ def team_index(request):
 
 def team_detail(request, team_id):
     team = Team.objects.get(id=team_id)
-    return render(request, 'teams/detail.html', { 'team': team })
+    match_form = MatchForm()
+    return render(request, 'teams/detail.html', { 'team': team, 'match_form': match_form })
 
 class TeamCreate(CreateView):
     model = Team
@@ -53,3 +56,12 @@ class TeamUpdate(UpdateView):
 class TeamDelete(DeleteView):
     model = Team
     success_url = '/teams/'
+
+
+def add_match(request, team_id):
+    form = MatchForm(request.POST)
+    if form.is_valid():
+        new_match = form.save(commit=False)
+        new_match.team_id = team_id
+        new_match.save()
+    return redirect('team-detail', team_id=team_id)
