@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Team
-
-
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
@@ -37,3 +37,19 @@ def team_index(request):
 def team_detail(request, team_id):
     team = Team.objects.get(id=team_id)
     return render(request, 'teams/detail.html', { 'team': team })
+
+class TeamCreate(CreateView):
+    model = Team
+    fields = '__all__'
+    success_url = reverse_lazy('team-index')
+
+
+
+class TeamUpdate(UpdateView):
+    model = Team
+    fields = [ 'country', 'coach_name', 'stadium', 'image']
+    success_url = reverse_lazy('team-index')
+
+class TeamDelete(DeleteView):
+    model = Team
+    success_url = '/teams/'

@@ -7,5 +7,7 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('teams/', views.team_index, name='team-index'),
     path('teams/<int:team_id>/', views.team_detail, name='team-detail'),
-    path('admin/', admin.site.urls),
+    path('teams/create/', views.TeamCreate.as_view(), name='team-create'),
+    path('teams/<int:pk>/update/', views.TeamUpdate.as_view(), name='team-update'),
+    path('teams/<int:pk>/delete/', views.TeamDelete.as_view(), name='team-delete'),
 ]

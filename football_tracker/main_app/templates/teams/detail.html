@@ -16,6 +16,12 @@
             <h2>Country information is not available.</h2>
         {% endif %}
         <p>{{ team.coach_name }}</p>
-    </div>
+
+  <div class="c-actions">
+    <a href="{% url 'team-update' team.id %}" class="btn warn">Edit</a>
+    <a href="{% url 'team-delete' team.id %}" class="btn danger">Delete</a>
+  </div>
+</div>
+
 </section>
 {% endblock %}
