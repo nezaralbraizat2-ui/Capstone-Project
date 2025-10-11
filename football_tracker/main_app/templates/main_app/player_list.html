@@ -1,0 +1,42 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/players/player-index.css' %}" />
+{% endblock %} 
+{% block content %}
+
+<section class="page-header">
+  <h1>All Players</h1>
+  <img src="{% static 'css/images/football-player.jpg' %}" alt="A football player" />
+  <img src="{% static 'css/images/football-player.jpg' %}" alt="A football player" />
+  <img src="{% static 'css/images/football-player.jpg' %}" alt="A football player" />
+  <img src="{% static 'css/images/football-player.jpg' %}" alt="A football player" />
+</section>
+
+<section class="card-container">
+  {% for player in object_list %}
+  <div class="card">
+    <a href="{% url 'player-detail' player.id %}">
+      <div class="card-content">
+        <div class="card-img-container">
+          {% if player.image %}
+          <img src="{% static player.image %}" alt="{{ player.name }} photo" class="card-img"/>
+          {% else %}
+          <img src="{% static 'css/images/football-player-soccer-player-svgrepo-com.svg' %}" alt="Player Photo" class="card-img"/>
+          {% endif %}
+        </div>
+        <h2 class="card-title">{{ player.name }}</h2>
+        {% if player.team %}
+        <p><strong>Team:</strong> {{ player.team.name }}</p>
+        {% else %}
+        <p>Team information is not available.</p>
+        {% endif %}
+        <p><strong>Position:</strong> {{ player.position }}</p>
+        <p><strong>Jersey Number:</strong> {{ player.jersey_number }}</p>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+
+
+{% endblock %}

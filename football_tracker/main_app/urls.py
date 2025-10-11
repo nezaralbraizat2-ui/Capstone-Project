@@ -17,5 +17,7 @@ urlpatterns = [
     ),
     path('admin/', admin.site.urls),
     path('players/create/', views.PlayerCreate.as_view(), name='player-create'),
+    path('players/<int:pk>/', views.PlayerDetail.as_view(), name='player-detail'),
+    path('players/', views.PlayerList.as_view(), name='player-index'),
 ]
 

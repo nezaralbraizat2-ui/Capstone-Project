@@ -1,5 +1,7 @@
 from django.shortcuts import redirect, render
 
+from django.views.generic import ListView, DetailView
+
 from .forms import MatchForm
 from .models import Team, Player
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -13,17 +15,7 @@ def about(request):
     return render(request, 'about.html')
 
 
-# class Team:
-#     def __init__(self, name, country, coach_name, stadium=None, image=None):
-#         self.name = name
-#         self.country = country
-#         self.coach_name = coach_name
-#         self.stadium = stadium
-#         # optional image path (relative to static/) to show on templates
-#         self.image = image
 
-
-# Create the teams list after the Team class is defined so we can instantiate Team
 Team.teams = [
     Team("barcelona", "Spain", "hansi Flick", "Camp Nou", image='css/images/barcelona-logo.svg'),
     Team("man-united", "England", "ruben amorim", "Old Trafford", image='css/images/manchester-united.svg'),
@@ -69,3 +61,10 @@ def add_match(request, team_id):
 class PlayerCreate(CreateView):
     model = Player
     fields = '__all__'
+
+class PlayerDetail(DetailView):
+    model = Player
+
+
+class PlayerList(ListView):
+    model = Player

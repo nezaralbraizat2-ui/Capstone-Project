@@ -1,0 +1,109 @@
+
+
+
+body {
+  background-color: #f8f9fa;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.page-header {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  color: #222;
+  margin-bottom: 1.5rem;
+}
+
+.page-header img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  margin: 0.5rem;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  transition: transform 0.3s ease;
+}
+
+.page-header img:hover {
+  transform: scale(1.1);
+}
+
+/* ====== Player Cards ====== */
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  justify-items: center;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  width: 100%;
+  max-width: 270px;
+  text-align: center;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.card a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-img-container {
+  background-color: #f1f1f1;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-img {
+  width: 80%;
+  height: 80%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.card-title {
+  font-size: 1.3rem;
+  margin: 0.8rem 0 0.3rem 0;
+  color: #222;
+  font-weight: 600;
+}
+
+.card-content p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+
+@media (max-width: 600px) {
+  .page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .card-container {
+    padding: 1rem;
+  }
+
+  .card {
+    max-width: 90%;
+  }
+}

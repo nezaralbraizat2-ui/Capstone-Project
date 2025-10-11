@@ -47,6 +47,7 @@ class Match(models.Model):
 class Player(models.Model):
     name = models.CharField(max_length=100)
     position = models.CharField(max_length=50)
+    jersey_number = models.IntegerField(null=True, blank=True)
     team = models.ForeignKey(Team, related_name='players', on_delete=models.CASCADE)
 
     def __str__(self):
