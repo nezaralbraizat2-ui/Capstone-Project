@@ -15,5 +15,7 @@ urlpatterns = [
         views.add_match,
         name='add-match'
     ),
+    path('admin/', admin.site.urls),
+    path('players/create/', views.PlayerCreate.as_view(), name='player-create'),
 ]
 

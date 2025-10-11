@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 
 from .forms import MatchForm
-from .models import Team
+from .models import Team, Player
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 # Create your views here.
@@ -65,3 +65,7 @@ def add_match(request, team_id):
         new_match.team_id = team_id
         new_match.save()
     return redirect('team-detail', team_id=team_id)
+
+class PlayerCreate(CreateView):
+    model = Player
+    fields = '__all__'

@@ -42,3 +42,12 @@ class Match(models.Model):
     
     class Meta:
         ordering = ['-date']
+
+
+class Player(models.Model):
+    name = models.CharField(max_length=100)
+    position = models.CharField(max_length=50)
+    team = models.ForeignKey(Team, related_name='players', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return reverse('player-detail', kwargs={'pk': self.id})
