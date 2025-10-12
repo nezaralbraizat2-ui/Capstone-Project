@@ -2,7 +2,7 @@
 {% load static %} 
 
 {% block head %} 
-    <link rel="stylesheet" href="{% static 'css/teams/team-detail.css' %}" /> 
+<link rel="stylesheet" href="{% static 'css/teams/team-detail.css' %}" /> 
 {% endblock %} 
 
 {% block content %}
@@ -55,6 +55,8 @@
             <th>Home Team</th>
             <th>Away Team</th>
             <th>Score</th>
+            <th>Players</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -64,6 +66,30 @@
             <td>{{ match.home_team.name }}</td>
             <td>{{ match.away_team.name }}</td>
             <td>{{ match.home_score }} - {{ match.away_score }}</td>
+            <td>
+              {% if match.players.all %}
+                <ul>
+                  {% for player in match.players.all %}
+                    <li>
+                      {{ player.name }}
+                      <form action="{% url 'remove_player_from_match' player.id match.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn danger">Remove</button>
+                      </form>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                No players yet
+              {% endif %}
+            </td>
+            <td>
+              <!-- Cancel Match Button -->
+              <form action="{% url 'cancel-match' match.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn danger">Cancel</button>
+              </form>
+            </td>
           </tr>
           {% endfor %}
         </tbody>

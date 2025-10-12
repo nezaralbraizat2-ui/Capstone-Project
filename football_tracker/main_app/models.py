@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -19,7 +19,7 @@ class Team(models.Model):
     coach_name = models.CharField(max_length=100)
     stadium = models.CharField(max_length=100, null=True, blank=True)
     image = models.CharField(max_length=255, null=True, blank=True)
-
+    
     def __str__(self):
         return self.name
     
@@ -30,19 +30,6 @@ def get_absolute_url(self):
     return reverse('team-detail', kwargs={'team_id': self.id})
 
 
-class Match(models.Model):
-    date = models.DateField('match date')
-    home_team = models.ForeignKey(Team, related_name='home_matches', on_delete=models.CASCADE)
-    away_team = models.ForeignKey(Team, related_name='away_matches', on_delete=models.CASCADE)
-    home_score = models.IntegerField(null=True, blank=True)
-    away_score = models.IntegerField(null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.home_team} vs {self.away_team} on {self.date}"
-    
-    class Meta:
-        ordering = ['-date']
-
 
 class Player(models.Model):
     name = models.CharField(max_length=100)
@@ -52,3 +39,24 @@ class Player(models.Model):
 
     def __str__(self):
         return reverse('player-detail', kwargs={'pk': self.id})
+
+
+
+
+
+class Match(models.Model):
+    date = models.DateField('match date')
+    home_team = models.ForeignKey(Team, related_name='home_matches', on_delete=models.CASCADE)
+    away_team = models.ForeignKey(Team, related_name='away_matches', on_delete=models.CASCADE)
+    home_score = models.IntegerField(null=True, blank=True)
+    away_score = models.IntegerField(null=True, blank=True)
+    created_by = models.ForeignKey(User, related_name='matches_created', on_delete=models.CASCADE)
+    players = models.ManyToManyField(Player, related_name='matches', blank=True)  # <-- Many-to-Many
+
+    def __str__(self):
+        return f"{self.home_team} vs {self.away_team} on {self.date}"
+    
+    class Meta:
+        ordering = ['-date']
+
+

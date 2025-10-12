@@ -1,12 +1,31 @@
-from django.shortcuts import redirect, render
+from ast import Match
+from django.shortcuts import get_object_or_404, redirect, render
 
 from django.views.generic import ListView, DetailView
 
 from .forms import MatchForm
-from .models import Team, Player
+from .models import Team, Player, Match
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 # Create your views here.
+
+
+
+def add_player_to_match(request, player_id, match_id):
+    player = Player.objects.get(id=player_id)
+    match = Match.objects.get(id=match_id)
+    match.players.add(player)
+    return redirect('player-detail', pk=player.id)
+
+
+def remove_player_from_match(request, player_id, match_id):
+    player = Player.objects.get(id=player_id)
+    match = Match.objects.get(id=match_id)
+    match.players.remove(player) 
+    return redirect('player-detail', pk=player.id)
+
+
+
 def home(request):
     return render(request, 'home.html')
 
@@ -53,17 +72,26 @@ class TeamDelete(DeleteView):
 def add_match(request, team_id):
     form = MatchForm(request.POST)
     if form.is_valid():
-        new_match = form.save(commit=False)
-        new_match.team_id = team_id
-        new_match.save()
+        new_match = form.save(commit=False)  # لم يتم الحفظ بعد
+        new_match.team_id = team_id           # ربط بالمباراة بالفريق
+        new_match.created_by = request.user   # ربط بالمستخدم الحالي
+        new_match.save()                      # الآن نحفظه في قاعدة البيانات
     return redirect('team-detail', team_id=team_id)
 
 class PlayerCreate(CreateView):
     model = Player
-    fields = '__all__'
+    fields = ['name', 'position', 'jersey_number', 'team']
+    success_url = reverse_lazy('player-index')
 
 class PlayerDetail(DetailView):
     model = Player
+    template_name = 'main_app/player_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        available_matches = Match.objects.exclude(players=self.object)
+        context['matches'] = available_matches
+        return context
 
 
 class PlayerList(ListView):
@@ -76,3 +104,10 @@ class PlayerUpdate(UpdateView):
 class PlayerDelete(DeleteView):
     model = Player
     success_url = '/players/'
+
+def cancel_match(request, match_id):
+    match = Match.objects.get(id=match_id)
+    team_id = match.home_team.id
+    match.delete()  
+    return redirect('team-detail', team_id=team_id)
+

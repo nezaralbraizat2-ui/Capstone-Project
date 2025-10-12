@@ -7,6 +7,8 @@
 
 {% block content %}
 <section class="player-detail-container">
+
+  <!-- Player Card -->
   <div 
     class="card" 
     style="border-color: {% if player.team %}{{ player.team.color }}{% else %}#ccc{% endif %}"
@@ -18,7 +20,6 @@
 
     <div class="card-content">
       <h1>{{ player.name }}</h1>
-      
       {% if player.team %}
         <p><strong>Team:</strong> {{ player.team.name }}</p>
       {% else %}
@@ -33,9 +34,43 @@
     </div>
   </div>
 
+  <!-- Actions -->
   <div class="actions">
     <a href="{% url 'player-update' player.id %}" class="btn warn">Edit</a>
     <a href="{% url 'player-delete' player.id %}" class="btn danger">Delete</a>
   </div>
+
+  <!-- Current Matches -->
+  <h3>Current Matches</h3>
+  <ul class="match-list">
+    {% for match in player.match_set.all %}
+      <li style="border-left: 4px solid {% if match.home_team.color %}{{ match.home_team.color }}{% else %}#ccc{% endif %}; padding-left: 8px; margin-bottom: 6px;">
+        {{ match.home_team.name }} vs {{ match.away_team.name }} on {{ match.date }}
+        <form action="{% url 'remove_player_from_match' player.id match.id %}" method="POST" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn danger">Remove from Match</button>
+        </form>
+      </li>
+    {% empty %}
+      <li>No matches yet.</li>
+    {% endfor %}
+  </ul>
+
+  <!-- Available Matches -->
+  <h3>Available Matches</h3>
+  <ul class="match-list">
+    {% for match in matches %}
+      <li style="border-left: 4px solid {% if match.home_team.color %}{{ match.home_team.color }}{% else %}#ccc{% endif %}; padding-left: 8px; margin-bottom: 6px;">
+        {{ match.home_team.name }} vs {{ match.away_team.name }} on {{ match.date }}
+        <form action="{% url 'add_player_to_match' player.id match.id %}" method="POST" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn primary">Add to Match</button>
+        </form>
+      </li>
+    {% empty %}
+      <li>No available matches.</li>
+    {% endfor %}
+  </ul>
+
 </section>
 {% endblock %}
