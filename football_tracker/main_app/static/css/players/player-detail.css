@@ -1,0 +1,90 @@
+.player-detail-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 3rem auto;
+  max-width: 600px;
+  padding: 2rem;
+  background-color: #f9fafb;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  border: 3px solid #ccc;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.card-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.15;
+}
+
+.card-content {
+  position: relative;
+  padding: 2rem;
+  text-align: center;
+  z-index: 1;
+}
+
+.card-content h1 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  color: #111827;
+}
+
+.card-content p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  color: #374151;
+}
+
+.card-content strong {
+  color: #111827;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn {
+  padding: 0.6rem 1.4rem;
+  font-size: 1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn.warn {
+  background-color: #f59e0b; /* Amber */
+}
+
+.btn.warn:hover {
+  background-color: #d97706;
+  transform: translateY(-2px);
+}
+
+.btn.danger {
+  background-color: #dc2626; /* Red */
+}
+
+.btn.danger:hover {
+  background-color: #b91c1c;
+  transform: translateY(-2px);
+}

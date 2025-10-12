@@ -30,9 +30,9 @@
                     </div>
                     <h2 class="card-title">{{ team.name }}</h2>
                     {% if team.country %}
-                        <p><strong>Country:</strong> {{ team.country }}</p>
-                        <p><strong>Coach:</strong> {{ team.coach_name }}</p>
-                        <p><strong>Stadium:</strong> {{ team.stadium }}</p>
+                        <p><strong>Country:</strong><span>{{ team.country }}</span></p>
+                        <p><strong>Coach:</strong><span>{{ team.coach_name }}</span></p>
+                        <p><strong>Stadium:</strong><span>{{ team.stadium }}</span></p>
                     {% else %}
                         <p>Team information is not available.</p>
                     {% endif %}

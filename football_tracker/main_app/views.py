@@ -68,3 +68,11 @@ class PlayerDetail(DetailView):
 
 class PlayerList(ListView):
     model = Player
+
+class PlayerUpdate(UpdateView):
+    model = Player
+    fields = ['name', 'position', 'jersey_number']
+
+class PlayerDelete(DeleteView):
+    model = Player
+    success_url = '/players/'

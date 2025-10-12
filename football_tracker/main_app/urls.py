@@ -10,14 +10,12 @@ urlpatterns = [
     path('teams/create/', views.TeamCreate.as_view(), name='team-create'),
     path('teams/<int:pk>/update/', views.TeamUpdate.as_view(), name='team-update'),
     path('teams/<int:pk>/delete/', views.TeamDelete.as_view(), name='team-delete'),
-    path(
-        'teams/<int:team_id>/add-match/',
-        views.add_match,
-        name='add-match'
-    ),
+    path('teams/<int:team_id>/add-match/', views.add_match, name='add-match'),
     path('admin/', admin.site.urls),
     path('players/create/', views.PlayerCreate.as_view(), name='player-create'),
     path('players/<int:pk>/', views.PlayerDetail.as_view(), name='player-detail'),
     path('players/', views.PlayerList.as_view(), name='player-index'),
+    path('players/<int:pk>/update/', views.PlayerUpdate.as_view(), name='player-update'),
+    path('players/<int:pk>/delete/', views.PlayerDelete.as_view(), name='player-delete'),
 ]
 

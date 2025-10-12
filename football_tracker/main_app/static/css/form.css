@@ -1,13 +1,18 @@
+/* === FORM STYLES === */
 .form-container {
   display: flex;
   flex-direction: column;
   width: 100%;
+  gap: 12px;
+  transition: all 0.4s ease;
 }
 
+/* === TABLE STYLES === */
 table {
   padding: 0 40px;
   width: 100%;
   border-spacing: 0 20px;
+  transition: all 0.4s ease;
 }
 
 th {
@@ -15,7 +20,9 @@ th {
   padding: 6px 20px 0 0;
   font-weight: normal;
   vertical-align: top;
-  font-size: var(--font-reg);
+  font-size: var(--font-reg, 16px);
+  color: #003366;
+  transition: color 0.4s ease;
 }
 
 td {
@@ -24,22 +31,63 @@ td {
 
 td > * {
   width: 100%;
-  padding: 2px 4px;
-  font-size: var(--font-l);
+  padding: 4px 6px;
+  font-size: var(--font-l, 16px);
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #222;
+  transition: all 0.4s ease;
 }
 
 td > textarea {
-  height: calc(4 * var(--font-l) + 8px);
+  height: calc(4 * var(--font-l, 16px) + 8px);
   font-family: inherit;
+  resize: vertical;
 }
 
+/* BUTTON */
 .btn {
   align-self: flex-end;
   margin-right: 40px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
+.btn:hover {
+  background-color: #2468f8;
+  transform: scale(1.05);
+}
+
+/* MEDIA QUERIES */
 @media only screen and (min-width: 768px) {
   table {
     padding: 0 80px;
   }
+}
+
+/* === DARK MODE === */
+body.dark-mode th {
+  color: #ffcc00;
+}
+
+body.dark-mode td > * {
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+  border: 1px solid #333;
+}
+
+body.dark-mode .btn {
+  background-color: #ffcc00;
+  color: #001f3f;
+}
+
+body.dark-mode .btn:hover {
+  background-color: #ffc700;
 }

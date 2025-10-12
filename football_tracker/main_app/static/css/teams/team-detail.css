@@ -1,10 +1,14 @@
-/* Team detail page styles */
+/* Team detail page styles - Light & Dark Mode Compatible */
 
 :root {
-  --td-bg: #f7fbff;
-  --card-bg: #ffffff;
-  --muted: #6b7280;
-  --accent: #2468f8;
+  --td-bg-light: #f7fbff;
+  --td-bg-dark: #1e1e1e;
+  --card-bg-light: #ffffff;
+  --card-bg-dark: #1e1e1e;
+  --muted-light: #6b7280;
+  --muted-dark: #d1d5db;
+  --accent-light: #2468f8;
+  --accent-dark: #ffcc00;
   --radius: 12px;
 }
 
@@ -19,6 +23,7 @@
   align-items: center;
   gap: 24px;
   flex-direction: column;
+  transition: all 0.4s ease;
 }
 
 .team-img {
@@ -31,6 +36,7 @@
   border-radius: 50%;
   border: 2px solid rgba(36,104,248,0.12);
   padding: 12px;
+  transition: all 0.4s ease;
 }
 
 .team-logo {
@@ -42,6 +48,7 @@
 .team-details {
   text-align: center;
   padding: 6px 10px;
+  transition: all 0.4s ease;
 }
 
 .team-details h1 {
@@ -49,19 +56,22 @@
   font-size: clamp(2rem, 3.2vw, 2.8rem);
   color: #0f172a;
   text-transform: capitalize;
+  transition: color 0.4s ease;
 }
 
 .team-details h2 {
   margin: 0 0 12px 0;
   font-size: 1.4rem;
-  color: var(--muted);
+  color: var(--muted-light);
   font-weight: 500;
+  transition: color 0.4s ease;
 }
 
 .team-details p {
   margin: 0;
-  color: var(--accent);
+  color: var(--accent-light);
   font-weight: 600;
+  transition: color 0.4s ease, background-color 0.4s ease;
 }
 
 /* Layout for larger screens */
@@ -85,3 +95,24 @@
 
 /* small tweaks for accessibility */
 .team-details h1, .team-details h2 { line-height: 1.12; }
+
+/* === DARK MODE === */
+body.dark-mode .team-container {
+  background: linear-gradient(180deg, rgba(30,30,30,0.9), rgba(40,40,40,0.8));
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+}
+
+body.dark-mode .team-details h1 {
+  color: #ffcc00;
+}
+
+body.dark-mode .team-details h2 {
+  color: #d1d5db;
+}
+
+body.dark-mode .team-details p {
+  color: #f1f1f1;
+  background-color: rgba(0,0,0,0.3);
+  border-radius: 5px;
+  padding: 3px 6px;
+}
