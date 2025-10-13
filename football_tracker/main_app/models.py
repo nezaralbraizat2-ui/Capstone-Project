@@ -19,6 +19,7 @@ class Team(models.Model):
     coach_name = models.CharField(max_length=100)
     stadium = models.CharField(max_length=100, null=True, blank=True)
     image = models.CharField(max_length=255, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.name
@@ -35,7 +36,7 @@ class Player(models.Model):
     name = models.CharField(max_length=100)
     position = models.CharField(max_length=50)
     jersey_number = models.IntegerField(null=True, blank=True)
-    team = models.ForeignKey(Team, related_name='players', on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='players')
 
     def __str__(self):
         return reverse('player-detail', kwargs={'pk': self.id})

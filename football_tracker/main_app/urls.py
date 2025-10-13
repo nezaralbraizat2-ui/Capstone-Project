@@ -5,7 +5,7 @@ from django.contrib import admin
 
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.Home.as_view(), name='home'),
     path('about/', views.about, name='about'),
 
     path('teams/', views.team_index, name='team-index'),
@@ -25,4 +25,5 @@ urlpatterns = [
     path('matches/<int:match_id>/cancel/', views.cancel_match, name='cancel-match'),
 
     path('admin/', admin.site.urls),
+    path('accounts/signup/', views.signup, name='signup'),
 ]

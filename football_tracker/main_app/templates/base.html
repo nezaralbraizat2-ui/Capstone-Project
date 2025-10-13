@@ -21,12 +21,25 @@
             </div>
             <nav>
                 <ul>
-                    <li><button id="theme-toggle">🌙 Dark Mode</button></li>
-                    <li><a href="{% url 'team-index' %}">all teams</a></li>
-                    <li><a href="{% url 'player-index' %}">All Players</a></li>
-                    <li><a href="{% url 'team-create' %}">Add a team</a></li>
-                    <li><a href="{% url 'about' %}">About</a></li>
-                    <li><a href="{% url 'player-create' %}">Add a Player</a></li>
+                  <li><button id="theme-toggle">🌙 Dark Mode</button></li>
+                    {% if user.is_authenticated %}
+                  <li><a href="{% url 'team-index' %}">All Teams</a></li>
+                  <li><a href="{% url 'player-index' %}">All Players</a></li>
+                  <li><a href="{% url 'team-create' %}">Add a Team</a></li>
+                  <li><a href="{% url 'player-create' %}">Add a Player</a></li>
+                  <li><a href="{% url 'about' %}">About</a></li>
+                  <li>
+                    <form id="logout-form" method="post" action="{% url 'logout' %}">
+                      {% csrf_token %}
+                      <button type="submit">Log out</button>
+                    </form>
+                  </li>
+                   {% else %}
+                  <li><a href="{% url 'about' %}">About</a></li>
+                  <li><a href="{% url 'home' %}">Login</a></li>
+                  <li><a href="{% url 'signup' %}">Sign Up</a></li>
+
+                   {% endif %}
                 </ul>
             </nav>
         </header>
@@ -55,3 +68,6 @@
 
 </body>
 </html>
+
+
+ 
