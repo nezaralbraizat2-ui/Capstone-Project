@@ -1,5 +1,6 @@
 from django import forms
 from .models import Match
+from django.contrib.auth.models import User
 
 class MatchForm(forms.ModelForm):
     class Meta:
@@ -14,3 +15,8 @@ class MatchForm(forms.ModelForm):
                 }
             ),
         }
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email']

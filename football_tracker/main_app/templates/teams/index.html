@@ -2,43 +2,47 @@
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="{% static 'css/teams/team-index.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/teams/team-index.css' %}" />
 {% endblock %}
 
 {% block content %}
-<section class="page-header">
+  <section class="page-header">
     <h1>All Teams</h1>
-    <img src="{% static 'css/images/football-player-spain-svgrepo-com.svg' %}" alt="Football Icon" class="header-icon"/>
-    <img src="{% static 'css/images/football-svgrepo-com (1).svg' %}" alt="Football Icon" class="header-icon"/>
-    <img src="{% static 'css/images/football-svgrepo-com.svg' %}" alt="Football Icon" class="header-icon"/>
-    <img src="{% static 'css/images/football-svgrepo-com (2).svg' %}" alt="Football Icon" class="header-icon"/>
-</section>
+    <img src="{% static 'css/images/football-player-spain-svgrepo-com.svg' %}" alt="Football Icon" class="header-icon" />
+    <img src="{% static 'css/images/football-svgrepo-com (1).svg' %}" alt="Football Icon" class="header-icon" />
+    <img src="{% static 'css/images/football-svgrepo-com.svg' %}" alt="Football Icon" class="header-icon" />
+    <img src="{% static 'css/images/football-svgrepo-com (2).svg' %}" alt="Football Icon" class="header-icon" />
+  </section>
 
-<section class="card-container">
+  <section class="card-container">
     {% for team in teams %}
-        <div class="card">
-            <a href="{% url 'team-detail' team.id %}">
-                <div class="card-content">
-                    <div class="card-img-container">
-                    {% if team.image %}
-                   <img src="{% static team.image %}" alt="{{ team.name }} logo" class="card-img"/>
-                   {% else %}
-                    <img src="{% static 'css/images/football-player-soccer-player-svgrepo-com.svg' %}" alt="Team Logo" class="card-img"/>
-                   {% endif %}
-
-                        
-                    </div>
-                    <h2 class="card-title">{{ team.name }}</h2>
-                    {% if team.country %}
-                        <p><strong>Country:</strong><span>{{ team.country }}</span></p>
-                        <p><strong>Coach:</strong><span>{{ team.coach_name }}</span></p>
-                        <p><strong>Stadium:</strong><span>{{ team.stadium }}</span></p>
-                    {% else %}
-                        <p>Team information is not available.</p>
-                    {% endif %}
-                </div>
-            </a>
-        </div>
+      <div class="card">
+        <a href="{% url 'team-detail' team.id %}">
+          <div class="card-content">
+            <div class="card-img-container">
+              {% if team.image %}
+                <img src="{% static team.image %}" alt="{{ team.name }} logo" class="card-img" />
+              {% else %}
+                <img src="{% static 'css/images/football-player-soccer-player-svgrepo-com.svg' %}" alt="Team Logo" class="card-img" />
+              {% endif %}
+            </div>
+            <h2 class="card-title">{{ team.name }}</h2>
+            {% if team.country %}
+              <p>
+                <strong>Country:</strong><span>{{ team.country }}</span>
+              </p>
+              <p>
+                <strong>Coach:</strong><span>{{ team.coach_name }}</span>
+              </p>
+              <p>
+                <strong>Stadium:</strong><span>{{ team.stadium }}</span>
+              </p>
+            {% else %}
+              <p>Team information is not available.</p>
+            {% endif %}
+          </div>
+        </a>
+      </div>
     {% endfor %}
-</section>
+  </section>
 {% endblock %}

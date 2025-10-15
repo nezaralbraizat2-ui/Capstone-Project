@@ -85,10 +85,10 @@ class TeamDelete(LoginRequiredMixin,DeleteView):
 def add_match(request, team_id):
     form = MatchForm(request.POST)
     if form.is_valid():
-        new_match = form.save(commit=False)  # لم يتم الحفظ بعد
-        new_match.team_id = team_id           # ربط بالمباراة بالفريق
-        new_match.created_by = request.user   # ربط بالمستخدم الحالي
-        new_match.save()                      # الآن نحفظه في قاعدة البيانات
+        new_match = form.save(commit=False)
+        new_match.team_id = team_id          
+        new_match.created_by = request.user   
+        new_match.save()                     
     return redirect('team-detail', team_id=team_id)
 
 class PlayerCreate(LoginRequiredMixin,CreateView):
@@ -150,33 +150,21 @@ def signup(request):
     return render(request, 'signup.html', context)
 
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from .forms import UserUpdateForm
 
+@login_required
+def profile_view(request):
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        if user_form.is_valid():
+            user_form.save()
+            return redirect('profile')  # رجع لنفس الصفحة بعد التحديث
+    else:
+        user_form = UserUpdateForm(instance=request.user)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def signup(request):
-#     error_message = ''
-#     if request.method == 'POST':
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             login(request, user)
-#             return redirect('team-index')
-#         else:
-#             error_message = 'Invalid sign up - try again'
-#     form = UserCreationForm()
-#     context = {'form': form, 'error_message': error_message}
-#     return render(request, 'signup.html', context)
-   
+    context = {
+        'user_form': user_form
+    }
+    return render(request, 'users/profile.html', context)

@@ -1,106 +1,117 @@
-{% extends 'base.html' %} 
-{% load static %} 
+{% extends 'base.html' %}
+{% load static %}
 
-{% block head %} 
-<link rel="stylesheet" href="{% static 'css/teams/team-detail.css' %}" /> 
-{% endblock %} 
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/teams/team-detail.css' %}" />
+{% endblock %}
 
 {% block content %}
-<section class="team-container">
-  <div class="team-img">
-    <img src="{% static 'css/images/football-player-soccer-player-svgrepo-com.svg' %}" alt="{{ team.name }} logo" class="team-logo"/>
-  </div>
-  <div class="team-details">
-    <h1>{{ team.name }}</h1>
-    {% if team.country %}
-      <h2>A football team based in {{ team.country }}</h2>
-    {% else %}
-      <h2>Country information is not available.</h2>
-    {% endif %}
-    <p>{{ team.coach_name }}</p>
-
-    <div class="c-actions">
-      <a href="{% url 'team-update' team.id %}" class="btn warn">Edit</a>
-      <a href="{% url 'team-delete' team.id %}" class="btn danger">Delete</a>
+  <section class="team-container">
+    <div class="team-img">
+      <img src="{% static 'css/images/football-player-soccer-player-svgrepo-com.svg' %}" alt="{{ team.name }} logo" class="team-logo" />
     </div>
-  </div>
-</section>
+    <div class="team-details">
+      <h1>{{ team.name }}</h1>
+      {% if team.country %}
+        <h2>A football team based in {{ team.country }}</h2>
+      {% else %}
+        <h2>Country information is not available.</h2>
+      {% endif %}
+      <p>{{ team.coach_name }}</p>
 
-<div class="matches-player-container">
-  <section class="matches">
-    <div class="subsection-title">
-      <h2>Matches</h2>
-    </div>
-
-    <!-- Add a Match Form -->
-    <h3>Add a Match</h3>
-    <form
-      action="{% url 'add-match' team.id %}"
-      method="post"
-      class="subsection-content"
-      autocomplete="off"
-    >
-      {% csrf_token %} 
-      {{ match_form.as_p }}
-      <button type="submit" class="btn submit">Add Match</button>
-    </form>
-
-    <!-- Past Matches Section -->
-    <h3>Past Matches</h3>
-    {% if team.home_matches.all.count %}
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Home Team</th>
-            <th>Away Team</th>
-            <th>Score</th>
-            <th>Players</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for match in team.home_matches.all %}
-          <tr>
-            <td>{{ match.date }}</td>
-            <td>{{ match.home_team.name }}</td>
-            <td>{{ match.away_team.name }}</td>
-            <td>{{ match.home_score }} - {{ match.away_score }}</td>
-            <td>
-              {% if match.players.all %}
-                <ul>
-                  {% for player in match.players.all %}
-                    <li>
-                      {{ player.name }}
-                      <form action="{% url 'remove_player_from_match' player.id match.id %}" method="post" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn danger">Remove</button>
-                      </form>
-                    </li>
-                  {% endfor %}
-                </ul>
-              {% else %}
-                No players yet
-              {% endif %}
-            </td>
-            <td>
-              <!-- Cancel Match Button -->
-              <form action="{% url 'cancel-match' match.id %}" method="post" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn danger">Cancel</button>
-              </form>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <div class="subsection-content">
-        <p>⚠️ No matches played yet for {{ team.name }}!</p>
+      <div class="c-actions">
+        <a href="{% url 'team-update' team.id %}" class="btn warn">Edit</a>
+        <a href="{% url 'team-delete' team.id %}" class="btn danger">Delete</a>
       </div>
-    {% endif %}
-
+    </div>
   </section>
-</div>
 
+  <div class="matches-player-container">
+    <section class="matches-all">
+      <div class="add-matches-wrpper">
+        <div class="subsection-title">
+          <h2>Matches</h2>
+        </div>
+
+        <h3>Add a Match</h3>
+        <form action="{% url 'add-match' team.id %}" method="post" class="subsection-content" autocomplete="off">
+          {% csrf_token %}
+          {{ match_form.as_p }}
+          <button type="submit" class="btn-login-submit">Add Match</button>
+        </form>
+      </div>
+      <div class="matches-table-wrapper">
+        <h3>Past Matches</h3>
+        {% if team.home_matches.all.count %}
+          <div class="matches-list">
+            {% for match in team.home_matches.all %}
+              <div class="match-card">
+                <div class="match-header">
+                  <span class="match-date">{{ match.date }}</span>
+                  <form action="{% url 'cancel-match' match.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn danger">Cancel Match</button>
+                  </form>
+                </div>
+
+                <div class="match-body">
+                  <div class="team home-team">
+                    <h3>{{ match.home_team.name }}</h3>
+                    {% if match.players.all %}
+                      <ul>
+                        {% for player in match.players.all %}
+                          {% if player.team == match.home_team %}
+                            <li>
+                              {{ player.name }}
+                              <form action="{% url 'remove_player_from_match' player.id match.id %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn danger small">✖</button>
+                              </form>
+                            </li>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                    {% else %}
+                      <p>No players yet</p>
+                    {% endif %}
+                  </div>
+
+                  <div class="match-score">
+                    <span>{{ match.home_score }}</span>
+                    <span class="vs">VS</span>
+                    <span>{{ match.away_score }}</span>
+                  </div>
+
+                  <div class="team away-team">
+                    <h3>{{ match.away_team.name }}</h3>
+                    {% if match.players.all %}
+                      <ul>
+                        {% for player in match.players.all %}
+                          {% if player.team == match.away_team %}
+                            <li>
+                              {{ player.name }}
+                              <form action="{% url 'remove_player_from_match' player.id match.id %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn danger small">✖</button>
+                              </form>
+                            </li>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                    {% else %}
+                      <p>No players yet</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="subsection-content">
+            <p>⚠️ No matches played yet for {{ team.name }}!</p>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+  </div>
 {% endblock %}
