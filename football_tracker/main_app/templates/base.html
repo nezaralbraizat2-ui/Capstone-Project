@@ -18,64 +18,59 @@
       <div class="header-logo-container">
         <a href="/"><img src="{% static 'css/images/header-logo.svg' %}" alt="Football Tracker Logo" class="header-logo" /></a>
       </div>
-      
 
+      <nav>
+        <ul>
+          {% if user.is_authenticated %}
+            <li>
+              <a href="{% url 'profile' %}" id="profile-btn">
+                <span class="icon">👤</span>
+                <span class="text">{{ user.username }}</span>
+              </a>
+            </li>
+          {% endif %}
+          <li>
+            <button id="theme-toggle">🌙 Dark Mode</button>
+          </li>
+          <li>
+            <button id="icon-toggle">🔄 Toggle Icons</button>
+          </li>
 
-<nav>
-  <ul>
-
-      {% if user.is_authenticated %}
-      <li>
-        <a href="{% url 'profile' %}">
-            <h4>{{ user.username }}</h4>
-        </a>
-      </li>
-    {% endif %}
-    <li>
-      <button id="theme-toggle">🌙 Dark Mode</button>
-    </li>
-    <li>
-      <button id="icon-toggle">🔄 Toggle Icons</button>
-    </li>
-
-    {% if user.is_authenticated %}
-      <li>
-        <a href="{% url 'team-index' %}" data-icon="👥" data-text="All Teams">All Teams</a>
-      </li>
-      <li>
-        <a href="{% url 'player-index' %}" data-icon="⚽" data-text="All Players">All Players</a>
-      </li>
-      <li>
-        <a href="{% url 'team-create' %}" data-icon="➕" data-text="Add a Team">Add a Team</a>
-      </li>
-      <li>
-        <a href="{% url 'player-create' %}" data-icon="➕" data-text="Add a Player">Add a Player</a>
-      </li>
-      <li>
-        <a href="{% url 'about' %}" data-icon="ℹ️" data-text="About">About</a>
-      </li>
-      <li>
-        <form id="logout-form" method="post" action="{% url 'logout' %}">
-          {% csrf_token %}
-          <button type="submit" data-icon="🚪" data-text="Log out">Log out</button>
-        </form>
-      </li>
-    {% else %}
-      <li>
-        <a href="{% url 'about' %}" data-icon="ℹ️" data-text="About">About</a>
-      </li>
-      <li>
-        <a href="{% url 'home' %}" data-icon="🔑" data-text="Login">Login</a>
-      </li>
-      <li>
-        <a href="{% url 'signup' %}" data-icon="📝" data-text="Sign Up">Sign Up</a>
-      </li>
-    {% endif %}
-  </ul>
-</nav>
-
-
-
+          {% if user.is_authenticated %}
+            <li>
+              <a href="{% url 'team-index' %}" data-icon="👥" data-text="All Teams">All Teams</a>
+            </li>
+            <li>
+              <a href="{% url 'player-index' %}" data-icon="⚽" data-text="All Players">All Players</a>
+            </li>
+            <li>
+              <a href="{% url 'team-create' %}" data-icon="➕" data-text="Add a Team">Add a Team</a>
+            </li>
+            <li>
+              <a href="{% url 'player-create' %}" data-icon="➕" data-text="Add a Player">Add a Player</a>
+            </li>
+            <li>
+              <a href="{% url 'about' %}" data-icon="ℹ️" data-text="About">About</a>
+            </li>
+            <li>
+              <form id="logout-form" method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" data-icon="🚪" data-text="Log out">Log out</button>
+              </form>
+            </li>
+          {% else %}
+            <li>
+              <a href="{% url 'about' %}" data-icon="ℹ️" data-text="About">About</a>
+            </li>
+            <li>
+              <a href="{% url 'home' %}" data-icon="🔑" data-text="Login">Login</a>
+            </li>
+            <li>
+              <a href="{% url 'signup' %}" data-icon="📝" data-text="Sign Up">Sign Up</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
     </header>
     <main>
       {% block content %}
@@ -100,28 +95,25 @@
       })
     </script>
 
-
-<script>
-  const iconToggle = document.getElementById('icon-toggle');
-  let iconsMode = false;
-
-  iconToggle.addEventListener('click', () => {
-    iconsMode = !iconsMode;
- 
-    const navLinks = document.querySelectorAll('nav a, nav button[type="submit"]');
-
-    navLinks.forEach(link => {
-      if (iconsMode) {
-        link.textContent = link.dataset.icon;
-      } else {
-        link.textContent = link.dataset.text;
-      }
-    });
-
-    iconToggle.textContent = iconsMode ? "🔤 Show Text" : "🔄 Toggle Icons";
-  });
-</script>
-
-
+    <script>
+      const iconToggle = document.getElementById('icon-toggle')
+      let iconsMode = false
+      
+      iconToggle.addEventListener('click', () => {
+        iconsMode = !iconsMode
+      
+        const navLinks = document.querySelectorAll('nav a, nav button[type="submit"]')
+      
+        navLinks.forEach((link) => {
+          if (iconsMode) {
+            link.textContent = link.dataset.icon
+          } else {
+            link.textContent = link.dataset.text
+          }
+        })
+      
+        iconToggle.textContent = iconsMode ? '🔤 Show Text' : '🔄 Toggle Icons'
+      })
+    </script>
   </body>
 </html>
