@@ -160,7 +160,7 @@ def profile_view(request):
         user_form = UserUpdateForm(request.POST, instance=request.user)
         if user_form.is_valid():
             user_form.save()
-            return redirect('profile')  # رجع لنفس الصفحة بعد التحديث
+            return redirect('profile')  
     else:
         user_form = UserUpdateForm(instance=request.user)
 

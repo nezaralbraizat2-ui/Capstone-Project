@@ -158,7 +158,7 @@ td > textarea {
   transform: scale(1.05);
 }
 
-/* ✅ تحسين الريسبونسيف */
+
 @media (max-width: 768px) {
   table {
     padding: 0 10px;
@@ -190,7 +190,7 @@ td > textarea {
   }
 }
 
-/* ✅ تحسين للميد سايز (تابلتات وأجهزة متوسطة) */
+
 @media (min-width: 768px) and (max-width: 1200px) {
   table {
     padding: 0 30px;

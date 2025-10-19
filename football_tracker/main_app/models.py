@@ -10,11 +10,6 @@ from django.dispatch import receiver
 
 
 
-ATCH_TYPES = (
-    ('L', 'League'),
-    ('F', 'Friendly'),
-    ('C', 'Cup')
-)
 
 
 class Team(models.Model):
@@ -73,13 +68,13 @@ class Profile(models.Model):
         return f"{self.user.username} Profile"
 
 
-# ✅ Signal: Create profile automatically when user is created
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
 
-# ✅ Signal: Save profile when user is saved
+
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
